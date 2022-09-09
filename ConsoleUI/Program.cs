@@ -12,7 +12,19 @@ namespace ConsoleUI
         {
 
             //CarAdd();
-            ListAllCars();
+            //ListAllCars();
+            CarDetails();
+        }
+
+        private static void CarDetails()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+
+            foreach (var car in carManager.GetCarsDetails())
+            {
+                Console.WriteLine(car.CarName , car.BrandName, car.ColorName, car.DailyPrice);
+            }
+            
         }
         private static void ListAllCars()
         {
