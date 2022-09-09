@@ -10,20 +10,35 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+
+            //CarAdd();
+            ListAllCars();
+        }
+        private static void ListAllCars()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+            foreach (var car in carManager.GetAll())
+            {
+                Console.WriteLine(car.Description);
+            }
+        }
+        
+
+        private static void CarAdd()
+        {
             CarManager carManager = new CarManager(new EfCarDal());
             carManager.Add(new Car
             {
-                CarId = 1,
-                BrandId = 1,
+                CarId = 7,
+                BrandId = 6,
                 ColorId = 1,
-                DailyPrice = 300,
-                ModelYear = 2019,
-                Description = "Toyota Corolla"
+                DailyPrice = 600,
+                ModelYear = 2020,
+                Description = "2020 Black Mercedes-Benz"
             });
-            
-            foreach (var car in carManager.GetCarsByColorId(1))
+            foreach (var car in carManager.GetCarsByBrandId(6))
             {
-                Console.WriteLine(car.Description);
+                Console.WriteLine(car.Description + " Adlı Aracı Başarıyla Eklediniz!");
             }
         }
     }

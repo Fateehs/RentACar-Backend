@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -17,5 +18,6 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<Color> Colors { get; set; }
+
     }
 }

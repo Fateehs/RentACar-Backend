@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using Entities.Abstract;
+using Core.Entities;
 
 namespace Entities.Concrete
 {
