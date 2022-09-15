@@ -22,7 +22,7 @@ namespace Business.Concrete
         }
         public IResult Add(Rental rental)
         {
-
+           
             var rentalcheck = _rentalDal.Get(r => r.CarId == rental.CarId && r.ReturnDate == null);
 
             if (rentalcheck == null)
