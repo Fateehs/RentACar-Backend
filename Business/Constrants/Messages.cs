@@ -45,5 +45,8 @@ namespace Business.Constrants
         public static string RentalUpdateError = "Kiralama Güncellenirken Bir Sorun Oluştu!";
         public static string RentalDeleted = "Kiralama Kaldırıldı!";
         public static string RentalDeleteError = "Kiralama Kaldırılırken Bir Sorun Oluştu!";
+        public static string CarImageAdded = "Araç Resmi Eklendi!";
+        public static string CarImageDeleted = "Araç Resmi Silindi!";
+        public static string CarImageUpdated = "Araç Resmi Güncellendi!";
     }
 }
