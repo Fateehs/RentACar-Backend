@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Entities.Concrete;
 using Entities.DTOs;
+using Core.Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -28,6 +29,10 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Rental> Rentals { get; set; }
 
         public DbSet<CarImage> CarImages { get; set; }
+
+        public DbSet<OperationClaim> OperationClaims { get; set; }
+
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 
     }
 }

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Abstract
+namespace Core.Utilities.Security.JWT
 {
-    public interface IUserDal : IEntityRepository<User>
+    public interface ITokenHelper
     {
-        List<OperationClaim> GetClaims(User user);
+        AccessToken CreateToken(User user, List<OperationClaim> operationClaims);
     }
 }

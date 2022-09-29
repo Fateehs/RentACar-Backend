@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Core.Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,5 +50,12 @@ namespace Business.Constrants
         public static string CarImageAdded = "Araç Resmi Eklendi!";
         public static string CarImageDeleted = "Araç Resmi Silindi!";
         public static string CarImageUpdated = "Araç Resmi Güncellendi!";
+        public static string AuthorizationDenied = "Yetkiniz yok!";
+        public static string UserRegistered = "Kullanıcı kayıt oldu!";
+        public static string PasswordError = "Parola hatası!";
+        public static string SucessfulLogin = "Başarıyla giriş yapıldı!";
+        public static string UserNotFound = "Kullanıcı bulunamadı!";
+        public static string UserAlreadyExists = "Kullanıcı zaten bulunuyor!";
+        public static string AccessTokenCreated = "AccessToken yaratıldı!";
     }
 }
