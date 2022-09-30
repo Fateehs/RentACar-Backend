@@ -5,6 +5,7 @@ using Business.Concrete;
 using Castle.DynamicProxy;
 using Core.Utilities.Helpers.FileHelper;
 using Core.Utilities.Interceptors;
+using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Http;
