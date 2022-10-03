@@ -8,6 +8,7 @@ using Business.Abstract;
 using Business.BusinessAspects.AutoFac;
 using Business.Constrants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -25,6 +26,8 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [CacheAspect(10)]
+        [SecuredOperation("user,moderator,admin")]
         public IDataResult<List<Car>> GetAll()
         {
             if (DateTime.Now.Hour==22)
@@ -34,22 +37,29 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
 
+        [CacheAspect(10)]
+        [SecuredOperation("user,moderator,admin")]
         public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId));
         }
 
+        [CacheAspect(10)]
+        [SecuredOperation("user,moderator,admin")]
         public IDataResult<List<Car>> GetCarsByColorId(int colorId)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId));
         }
 
+        [CacheAspect(10)]
+        [SecuredOperation("user,moderator,admin")]
         public IDataResult<Car> GetById(int id)
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == id));
         }
 
-        [SecuredOperation("car.add,admin")]
+        [CacheRemoveAspect("ICarService.Get")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {  
@@ -58,6 +68,9 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarAdded);
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
+        [SecuredOperation("admin")]
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
@@ -65,12 +78,17 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarDeleted);
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
+        [SecuredOperation("admin,moderator")]
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
             _carDal.Update(car);
             return new SuccessResult(Messages.CarUpdated);
         }
 
+        [CacheAspect(10)]
+        [SecuredOperation("user,moderator,admin")]
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
