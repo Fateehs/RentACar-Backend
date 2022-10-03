@@ -22,12 +22,7 @@ namespace Business.Concrete
         }
 
         public IResult Add(User user)
-        {
-            if (user.Id == 0)
-            {
-                return new ErrorResult(Messages.UserAddError);
-            }
-
+        {           
             _userDal.Add(user);
 
             return new SuccessResult(Messages.UserAdded);
