@@ -23,10 +23,6 @@ namespace Business.Concrete
 
         public IResult Add(Color color)
         {
-            if (color.Id == 0)
-            {
-                return new ErrorResult(Messages.ColorAddError);
-            }
             _colorDal.Add(color);
 
             return new SuccessResult(Messages.ColorAdded);
@@ -53,7 +49,7 @@ namespace Business.Concrete
 
         public IDataResult<Color> GetColorById(int colorId)
         {
-            return new SuccessDataResult<Color>(_colorDal.Get(c => c.Id == colorId));
+            return new SuccessDataResult<Color>(_colorDal.Get(c => c.ColorId == colorId));
         }
     }
 }

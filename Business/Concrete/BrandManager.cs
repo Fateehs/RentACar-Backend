@@ -23,11 +23,6 @@ namespace Business.Concrete
 
         public IResult Add(Brand brand)
         {
-            if (brand.Id == 0)
-            {
-                return new ErrorResult(Messages.BrandAddError);
-            }
-
             _brandDal.Add(brand);
 
             return new SuccessResult(Messages.BrandAdded);
@@ -54,7 +49,7 @@ namespace Business.Concrete
 
         public IDataResult<Brand> GetBrandById(int brandId)
         {
-            return new SuccessDataResult<Brand>(_brandDal.Get(b => b.Id == brandId));
+            return new SuccessDataResult<Brand>(_brandDal.Get(b => b.BrandId == brandId));
         }
     }
 }

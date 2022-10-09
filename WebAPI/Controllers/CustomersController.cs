@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
             var result = _customerService.GetAll();
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
             return BadRequest(result);
         }
@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
             var result = _customerService.GetCustomerById(customerId);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
             return BadRequest(result);
         }
