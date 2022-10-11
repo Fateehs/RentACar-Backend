@@ -4,6 +4,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +23,6 @@ namespace Business.Concrete
         }
         public IResult Add(Customer customer)
         {
-            if (customer.UserId == 0)
-            {
-                return new ErrorResult(Messages.UserAddError);
-            }
-
             _customerDal.Add(customer);
 
             return new SuccessResult(Messages.UserAdded);
@@ -50,9 +46,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll());
         }
 
-        public IDataResult<Customer> GetCustomerById(int customerId)
+        public IDataResult<Customer> GetById(int customerId)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(cu => cu.UserId == customerId));
+            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.CustomerId == customerId));
+        }
+
+        public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
+        {
+            return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetails());
         }
     }
 }

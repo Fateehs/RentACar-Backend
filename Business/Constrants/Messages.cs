@@ -1,4 +1,6 @@
 ﻿using Core.Entities.Concrete;
+using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,5 +59,14 @@ namespace Business.Constrants
         public static string UserNotFound = "Kullanıcı bulunamadı!";
         public static string UserAlreadyExists = "Kullanıcı zaten bulunuyor!";
         public static string AccessTokenCreated = "AccessToken yaratıldı!";
+        public static string RentalWasDelivered = "Kiralama teslim edildi!";
+        public static string RentalsListed = "Kiralamalar listelendi!";
+        public static string TheRentalListed = "Kiralama listelendi!";
+        public static string CarIsInAlreadyRental = "Bu araç zaten kiralanmış!";
+        public static string TheCustomerDoesNotExist = "Kiralamak isteyen müşteri bulunamadı!";
+        public static string TheCarDoesNotExist = "Araç bulununamadı!";
+        public static string ThereIsNoRentalWhichHasTheGivenId = "Bu değerlere sahip bir kiralama yok!";
+        public static string RentalHasAlreadyDelivered = "Zaten kiralanmış!";
+        internal static List<CustomerDetailDto> CustomersListed;
     }
 }
