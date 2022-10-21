@@ -49,9 +49,9 @@ namespace Business.Concrete
 
         [CacheAspect(10)]
         //[SecuredOperation("user,moderator,admin")]
-        public IDataResult<Car> GetById(int id)
+        public IDataResult<Car> GetById(int carId)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == id));
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId));
         }
 
         [CacheRemoveAspect("ICarService.Get")]

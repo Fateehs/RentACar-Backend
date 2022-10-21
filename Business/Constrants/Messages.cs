@@ -67,6 +67,6 @@ namespace Business.Constrants
         public static string TheCarDoesNotExist = "Araç bulununamadı!";
         public static string ThereIsNoRentalWhichHasTheGivenId = "Bu değerlere sahip bir kiralama yok!";
         public static string RentalHasAlreadyDelivered = "Zaten kiralanmış!";
-        internal static List<CustomerDetailDto> CustomersListed;
+        public static string CustomersListed = "Müşteriler Listelendi";
     }
 }
