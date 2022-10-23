@@ -15,25 +15,54 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, RentACarContext>, ICarDal
     {
-        public List<CarDetailDto> GetCarDetails()
+        public CarDetailDto GetDetail(Expression<Func<Car, bool>> filter)
         {
-            using (RentACarContext context = new RentACarContext())
+            using (var context = new RentACarContext())
             {
-                var result = from car in context.Cars
-                             join color in context.Colors on car.ColorId equals color.ColorId
-                             join brand in context.Brands on car.BrandId equals brand.BrandId
+                var result = from car in context.Cars.Where(filter)
+                             join color in context.Colors
+                             on car.ColorId equals color.ColorId
+                             join brand in context.Brands
+                             on car.BrandId equals brand.BrandId
                              select new CarDetailDto
                              {
                                  CarId = car.CarId,
-                                 CarName = car.CarName,
                                  BrandName = brand.BrandName,
                                  ColorName = color.ColorName,
+                                 CarName = car.CarName,
                                  ModelYear = car.ModelYear,
                                  DailyPrice = car.DailyPrice,
-                                 Description = car.Description
+                                 Description = car.Description,
+                                 ImagePath = context.CarImages.Where(c => c.CarId == car.CarId).ToList()
+                             };
+                return result.SingleOrDefault();
+
+            }
+        }
+
+        public List<CarDetailDto> GetDetails(Expression<Func<Car, bool>> filter = null)
+        {
+            using (var context = new RentACarContext())
+            {
+                var result = from car in filter == null ? context.Cars : context.Cars.Where(filter)
+                             join color in context.Colors
+                             on car.ColorId equals color.ColorId
+                             join brand in context.Brands
+                             on car.BrandId equals brand.BrandId
+                             select new CarDetailDto
+                             {
+                                 CarId = car.CarId,
+                                 BrandName = brand.BrandName,
+                                 ColorName = color.ColorName,
+                                 CarName = car.CarName,
+                                 ModelYear = car.ModelYear,
+                                 DailyPrice = car.DailyPrice,
+                                 Description = car.Description,
+                                 ImagePath = context.CarImages.Where(ci => ci.CarId == car.CarId).ToList()
                              };
                 return result.ToList();
             }
         }
     }
 }
+

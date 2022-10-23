@@ -68,5 +68,6 @@ namespace Business.Constrants
         public static string ThereIsNoRentalWhichHasTheGivenId = "Bu değerlere sahip bir kiralama yok!";
         public static string RentalHasAlreadyDelivered = "Zaten kiralanmış!";
         public static string CustomersListed = "Müşteriler Listelendi";
+        public static string Geted = "Alındı!";
     }
 }
