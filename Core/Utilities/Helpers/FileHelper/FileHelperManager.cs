@@ -12,6 +12,8 @@ namespace Core.Utilities.Helpers.FileHelper
 {
     public class FileHelperManager : IFileHelperService
     {
+        string _path = Directory.GetCurrentDirectory() + "/wwwroot/";
+        string _imageFolderPath = "images/";
         public void Delete(string filePath)
         {
             if (File.Exists(filePath))
@@ -39,13 +41,13 @@ namespace Core.Utilities.Helpers.FileHelper
                 }
                 string extension = Path.GetExtension(file.FileName);
                 string guid = GuidHelper.CreateGuid();
-                string filePath = guid + extension;
+                string filePath =  guid + extension;
 
-                using (FileStream fileStream = File.Create(root + filePath))
+                using (FileStream fileStream = File.Create(_path + _imageFolderPath + filePath))
                 {
                     file.CopyTo(fileStream);
                     fileStream.Flush();
-                    return filePath;
+                    return _imageFolderPath + filePath;
                 }
             }
             return null;

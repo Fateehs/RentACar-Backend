@@ -19,7 +19,7 @@ namespace Business.Concrete
     {
         ICarImageDal _carImageDal;
         IFileHelperService _fileHelper;
-
+        string _baseImagePath = @"wwwroot\\Uploads\\Images\\";
         public CarImageManager(ICarImageDal carImageDal, IFileHelperService fileHelper)
         {
             _carImageDal = carImageDal;
@@ -33,7 +33,7 @@ namespace Business.Concrete
             {
                 return result;
             }
-            carImage.ImagePath = _fileHelper.Upload(formFile, @"wwwroot\\Uploads\\Images\\");
+            carImage.ImagePath = _fileHelper.Upload(formFile, _baseImagePath);
             carImage.Date = DateTime.Now;
 
             _carImageDal.Add(carImage);
@@ -43,7 +43,7 @@ namespace Business.Concrete
         public IResult Update(IFormFile formFile, CarImage carImage)
         {
             var result = _carImageDal.Get(c => c.Id == carImage.Id);
-            carImage.ImagePath = _fileHelper.Update(formFile, @"wwwroot\\Uploads\\Images\\" + result.ImagePath, @"wwwroot\\Uploads\\Images\\");
+            carImage.ImagePath = _fileHelper.Update(formFile, _baseImagePath + result.ImagePath, _baseImagePath);
             carImage.Date = DateTime.Now;
             _carImageDal.Update(carImage);
             return new SuccessResult(Messages.CarImageUpdated);
@@ -51,7 +51,7 @@ namespace Business.Concrete
 
         public IResult Delete(CarImage carImage)
         {
-            _fileHelper.Delete(@"wwwroot\\Uploads\\Images\\" + carImage.ImagePath);
+            _fileHelper.Delete(_baseImagePath + carImage.ImagePath);
             _carImageDal.Delete(carImage);
             return new SuccessResult(Messages.CarImageDeleted);
         }
