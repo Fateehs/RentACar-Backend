@@ -20,6 +20,8 @@ namespace Business.Concrete
         ICarImageDal _carImageDal;
         IFileHelperService _fileHelper;
         string _baseImagePath = @"wwwroot\\Uploads\\Images\\";
+        string _defaultImagePath = "DefaultImage.jpg";
+
         public CarImageManager(ICarImageDal carImageDal, IFileHelperService fileHelper)
         {
             _carImageDal = carImageDal;
@@ -80,7 +82,7 @@ namespace Business.Concrete
         {
 
             List<CarImage> carImage = new List<CarImage>();
-            carImage.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = "DefaultImage.jpg" });
+            carImage.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = _defaultImagePath });
             return new SuccessDataResult<List<CarImage>>(carImage);
         }
 
