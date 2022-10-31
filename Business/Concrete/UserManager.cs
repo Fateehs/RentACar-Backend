@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constrants;
 using Core.Entities.Concrete;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -22,7 +23,11 @@ namespace Business.Concrete
         }
 
         public IResult Add(User user)
-        {           
+        {
+            var result = BusinessRules.Run(CheckIfEmailIsAlreadyRegistered(user.Email));
+
+            if (result != null) return result;
+
             _userDal.Add(user);
 
             return new SuccessResult(Messages.UserAdded);
@@ -59,6 +64,18 @@ namespace Business.Concrete
         public List<OperationClaim> GetClaims(User user)
         {
             return _userDal.GetClaims(user);
+        }
+
+        private IResult CheckIfEmailIsAlreadyRegistered(string email)
+        {
+            var userResult = _userDal.Get(u => u.Email == email);
+            if (userResult != null)
+            {
+                return new ErrorResult(Messages.EmailIsAlreadyRegistered);
+            }
+
+
+            return new SuccessResult();
         }
     }
 }

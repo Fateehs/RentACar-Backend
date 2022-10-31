@@ -70,5 +70,6 @@ namespace Business.Constrants
         public static string CustomersListed = "Müşteriler Listelendi";
         public static string Geted = "Alındı!";
         public static string Listed = "Listelendi!";
+        public static string EmailIsAlreadyRegistered = "Bu e-mail daha önce kullanılmış!";
     }
 }

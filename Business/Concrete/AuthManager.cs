@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constrants;
 using Core.Entities.Concrete;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;
@@ -36,7 +37,9 @@ namespace Business.Concrete
                 PasswordSalt = passwordSalt,
                 Status = true
             };
-            _userService.Add(user);
+            var result = _userService.Add(user);
+            if (!result.Success) return new ErrorDataResult<User>(result.Message);
+
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
