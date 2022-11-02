@@ -91,6 +91,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarUpdated);
         }
 
+       
         [CacheAspect(10)]
         //[SecuredOperation("user,moderator,admin")]
         public IDataResult<List<CarDetailDto>> GetDetails()
