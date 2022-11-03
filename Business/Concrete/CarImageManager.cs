@@ -19,8 +19,8 @@ namespace Business.Concrete
     {
         ICarImageDal _carImageDal;
         IFileHelperService _fileHelper;
-        string _baseImagePath = @"wwwroot\\Uploads\\Images\\";
-        string _defaultImagePath = "DefaultImage.jpg";
+        string _baseImagePath = @"wwwroot\\Images\\";
+        string _defaultImagePath = "images/DefaultImage.jpg";
 
         public CarImageManager(ICarImageDal carImageDal, IFileHelperService fileHelper)
         {
@@ -63,14 +63,11 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
         }
 
-        public IDataResult<List<CarImage>> GetByCarId(int carId)
+        public IDataResult<List<CarImage>> GetAllByCarId(int carId)
         {
-            var result = BusinessRules.Run(CheckCarImage(carId));
-            if (result != null)
-            {
-                return new ErrorDataResult<List<CarImage>>(GetDefaultImage(carId).Data);
-            }
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId));
+            var result = _carImageDal.GetAll(ci => ci.CarId == carId);
+            if (result.Count == 0) result.Add(new CarImage { ImagePath = _defaultImagePath });
+            return new SuccessDataResult<List<CarImage>>(result, Messages.Listed);
         }
 
         public IDataResult<CarImage> GetByImageId(int imageId)
@@ -84,16 +81,6 @@ namespace Business.Concrete
             List<CarImage> carImage = new List<CarImage>();
             carImage.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = _defaultImagePath });
             return new SuccessDataResult<List<CarImage>>(carImage);
-        }
-
-        private IResult CheckCarImage(int carId)
-        {
-            var result = _carImageDal.GetAll(c => c.CarId == carId).Count;
-            if (result > 0)
-            {
-                return new SuccessResult();
-            }
-            return new ErrorResult();
         }
 
         private IResult CheckCarImageLimit(int carId)

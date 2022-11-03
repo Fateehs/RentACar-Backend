@@ -15,7 +15,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, RentACarContext>, ICarDal
     {
-        public CarDetailDto GetDetail(Expression<Func<Car, bool>> filter)
+        public CarDetailDTO GetDetail(Expression<Func<Car, bool>> filter)
         {
             using (var context = new RentACarContext())
             {
@@ -24,7 +24,7 @@ namespace DataAccess.Concrete.EntityFramework
                              on car.ColorId equals color.ColorId
                              join brand in context.Brands
                              on car.BrandId equals brand.BrandId
-                             select new CarDetailDto
+                             select new CarDetailDTO
                              {
                                  CarId = car.CarId,
                                  BrandName = brand.BrandName,
@@ -40,7 +40,7 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
-        public List<CarDetailDto> GetDetails(Expression<Func<Car, bool>> filter = null)
+        public List<CarDetailDTO> GetDetails(Expression<Func<Car, bool>> filter = null)
         {
             using (var context = new RentACarContext())
             {
@@ -49,7 +49,7 @@ namespace DataAccess.Concrete.EntityFramework
                              on car.ColorId equals color.ColorId
                              join brand in context.Brands
                              on car.BrandId equals brand.BrandId
-                             select new CarDetailDto
+                             select new CarDetailDTO
                              {
                                  CarId = car.CarId,
                                  BrandName = brand.BrandName,

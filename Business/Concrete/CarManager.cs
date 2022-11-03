@@ -35,31 +35,34 @@ namespace Business.Concrete
 
         [CacheAspect(10)]
         //[SecuredOperation("user,moderator,admin")]
-        public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
+        public IDataResult<List<CarDetailDTO>> GetDetailsByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId));
+            var result = _carDal.GetDetails(c => c.BrandId == brandId);
+            return new SuccessDataResult<List<CarDetailDTO>>(result, Messages.Listed);
         }
 
         [CacheAspect(10)]
         //[SecuredOperation("user,moderator,admin")]
-        public IDataResult<List<Car>> GetCarsByColorId(int colorId)
+        public IDataResult<List<CarDetailDTO>> GetDetailsByColorId(int colorId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId));
+            var result = _carDal.GetDetails(c => c.ColorId == colorId);
+            return new SuccessDataResult<List<CarDetailDTO>>(result, Messages.Listed);
         }
 
         [CacheAspect(10)]
         //[SecuredOperation("user,moderator,admin")]
         public IDataResult<Car> GetById(int carId)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId));
+            var result = _carDal.Get(c => c.CarId == carId);
+            return new SuccessDataResult<Car>(result, Messages.Geted);
         }
-        
+
         [CacheAspect(10)]
         //[SecuredOperation("user,moderator,admin")]
-        public IDataResult<CarDetailDto> GetDetailById(int carId)
+        public IDataResult<CarDetailDTO> GetDetailById(int carId)
         {
             var result = _carDal.GetDetail(c => c.CarId == carId);
-            return new SuccessDataResult<CarDetailDto>(result, Messages.Geted);
+            return new SuccessDataResult<CarDetailDTO>(result, Messages.Geted);
         }
 
         [CacheRemoveAspect("ICarService.Get")]
@@ -91,14 +94,14 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarUpdated);
         }
 
-       
+
         [CacheAspect(10)]
         //[SecuredOperation("user,moderator,admin")]
-        public IDataResult<List<CarDetailDto>> GetDetails()
+        public IDataResult<List<CarDetailDTO>> GetDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetDetails());
+            return new SuccessDataResult<List<CarDetailDTO>>(_carDal.GetDetails());
         }
 
-        
+
     }
 }
