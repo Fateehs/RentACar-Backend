@@ -24,15 +24,15 @@ namespace Business.Concrete
             _userService = userService;
             _tokenHelper = tokenHelper;
         }
-        public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
+        public IDataResult<User> Register(RegisterDTO registerDTO, string password)
         {
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
             var user = new User
             {
-                Email = userForRegisterDto.Email,
-                FirstName = userForRegisterDto.FirstName,
-                LastName = userForRegisterDto.LastName,
+                Email = registerDTO.Email,
+                FirstName = registerDTO.FirstName,
+                LastName = registerDTO.LastName,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Status = true
@@ -43,14 +43,14 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
-        public IDataResult<User> Login(UserForLoginDto userForLoginDto)
+        public IDataResult<User> Login(LoginDTO loginDTO)
         {
-            var userToCheck = _userService.GetByMail(userForLoginDto.Email);
+            var userToCheck = _userService.GetByMail(loginDTO.Email);
             if (userToCheck == null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
             }
-            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt ))
+            if (!HashingHelper.VerifyPasswordHash(loginDTO.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt ))
             {
                 return new ErrorDataResult<User>(Messages.PasswordError);
             }

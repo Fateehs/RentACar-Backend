@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Castle.Core.Resource;
+using Core.Utilities.Results;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +33,17 @@ namespace WebAPI.Controllers
         public IActionResult GetCustomerById(int customerId)
         {
             var result = _customerService.GetById(customerId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("getbyuserid")]
+        public IActionResult GetByUserId(int userId)
+        {
+            var result = _customerService.GetByUserId(userId);
             if (result.Success)
             {
                 return Ok(result);

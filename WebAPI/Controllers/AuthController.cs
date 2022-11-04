@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(UserForLoginDto userForLoginDto)
+        public IActionResult Login(LoginDTO userForLoginDto)
         {
             var result = _authService.Login(userForLoginDto);
             if (!result.Success) return BadRequest(result);
@@ -32,10 +32,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Register(UserForRegisterDto userForRegisterDto)
+        public IActionResult Register(RegisterDTO registerDTO)
         {
 
-            var result = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
+            var result = _authService.Register(registerDTO, registerDTO.Password);
             if (!result.Success) return BadRequest(result);
 
             var createAccessTokenResult = _authService.CreateAccessToken(result.Data);

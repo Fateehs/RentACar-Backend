@@ -71,5 +71,18 @@ namespace Business.Constrants
         public static string Geted = "Alındı!";
         public static string Listed = "Listelendi!";
         public static string EmailIsAlreadyRegistered = "Bu e-mail daha önce kullanılmış!";
+        public static string ThisCarIsAlreadyRentedInSelectedDateRange = "Seçilen tarihlerde araç kiralanmış, lütfen başka bir tarih aralığında veya başka bir araç seçimi yapınız.";
+        public static string RentalDateCannotBeBeforeToday = "Kiralama günü geçmiş tarihler için olamaz, lütfen bugün ve sonrası için bir tarih seçiniz.";
+        public static string ReturnDateCannotBeEarlierThanRentDate ="Kiralamanın biteceği tarih kiralanacak günün öncesi olamaz.";
+        public static string ThisCarHasNotBeenReturnedYet="Bu araç bu tarihler aralığında kiralanmak için uygun değil, lütfen başka bir tarih veya araç seçiniz.";
+        public static string ReturnDateCannotBeLeftBlankAsThisCarWasAlsoRentedAtALaterDate ="Aracın teslim edileceği tarih boş bırakılamaz, aynı zamanda bu araç sonraki tarihler için kiralanmış durumda, lütfen seçtiğiniz tarihleri kontrol ediniz ayrıca başka bir araç seçimi de yapabilirsiniz.";
+        public static string RentalSuccessful= "Kiralama başarılı!";
+        public static string CardNumberMustConsistOfLettersOnly= "Kart numarası sadece rakamlardan oluşabilir!";
+        public static string LastTwoDigitsOfYearMustBeEntered="Son kullanım tarihinin son iki rakamı girilmelidir!";
+        public static string PaymentInformationSuccessfullySaved="Ödeme bilgileriniz başarıyla kaydedildi.";
+        public static string ThisCardIsAlreadyRegisteredForThisCustomer="Bu kart zaten bu kullanıcı için kayıtlı.";
+        public static string PaymentUpdated="Ödeme güncellendi!";
+        public static string PaymentDeleted="Ödeme silindi!";
+        public static string PaymentSuccessful="Ödeme başarılı!";
     }
 }

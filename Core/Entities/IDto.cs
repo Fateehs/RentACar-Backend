@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public interface IDto
+    public interface IDTO
     {
     }
 }
