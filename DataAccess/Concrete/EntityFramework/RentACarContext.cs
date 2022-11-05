@@ -17,6 +17,7 @@ namespace DataAccess.Concrete.EntityFramework
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=RentACar;Trusted_Connection=true");
         }
         public DbSet<Brand> Brands { get; set; }
+
         public DbSet<Car> Cars { get; set; }
 
         public DbSet<Color> Colors { get; set; }

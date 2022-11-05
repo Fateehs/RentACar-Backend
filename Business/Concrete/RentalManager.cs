@@ -97,6 +97,7 @@ namespace Business.Concrete
         private IResult CheckIfThisCarHasBeenReturned(Rental rental)
         {
             var result = _rentalDal.Get(r => r.CarId == rental.CarId && r.ReturnDate == null);
+
             if (result != null)
             {
                 if (rental.ReturnDate == null || rental.ReturnDate > result.RentDate)
@@ -134,10 +135,11 @@ namespace Business.Concrete
 
         private IResult CheckIfReturnDateIsBeforeRentDate(DateTime? returnDate, DateTime rentDate)
         {
-            if (returnDate != null && returnDate < rentDate)
-            {
-                return new ErrorResult(Messages.ReturnDateCannotBeEarlierThanRentDate);
-            }
+            if (returnDate != null)
+                if (returnDate < rentDate)
+                {
+                    return new ErrorResult(Messages.ReturnDateCannotBeEarlierThanRentDate);
+                }
             return new SuccessResult();
         }
 
