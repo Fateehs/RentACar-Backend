@@ -31,7 +31,7 @@ namespace Business.Concrete
         public IResult Add(IFormFile formFile, CarImage carImage)
         {
             IResult result = BusinessRules.Run(CheckCarImageLimit(carImage.CarId));
-            if (result != null)
+            if (!result.Success)
             {
                 return result;
             }
