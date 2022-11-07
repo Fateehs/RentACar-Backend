@@ -19,10 +19,14 @@ namespace Business.Concrete
     public class RentalManager : IRentalService
     {
         IRentalDal _rentalDal;
+        ICarService _carService;
+        ICustomerService _customerService;
 
-        public RentalManager(IRentalDal rentalDal)
+        public RentalManager(IRentalDal rentalDal, ICarService carService, ICustomerService customerService)
         {
             _rentalDal = rentalDal;
+            _carService = carService;
+            _customerService = customerService;
         }
 
         // *** CRUD OPERATIONS ***
@@ -83,6 +87,8 @@ namespace Business.Concrete
         {
             return BusinessRules.Run(
 
+                CheckIfCustomerIsFindeksPointIsSufficientForThisCar(rental.CarId, rental.CustomerId),
+
                 CheckIfThisCarHasBeenReturned(rental),
 
                 CheckIfThisCarIsAlreadyRentedInSelectedDateRange(rental),
@@ -92,6 +98,20 @@ namespace Business.Concrete
                 CheckIfReturnDateIsBeforeRentDate(rental.ReturnDate, rental.RentDate),
 
                 CheckIfThisCarIsRentedAtALaterDateWhileReturnDateIsNull(rental));
+        }
+
+        private IResult CheckIfCustomerIsFindeksPointIsSufficientForThisCar(int carId, int customerId)
+        {
+            var carResult = _carService.GetById(carId);
+            if (!carResult.Success) return new ErrorResult(carResult.Message);
+
+            var customerResult = _customerService.GetById(customerId);
+            if (!customerResult.Success) return new ErrorResult(customerResult.Message);
+
+            if (carResult.Data.FindeksPoint > customerResult.Data.FindeksPoint)
+                return new ErrorResult(Messages.CustomerFindeksPointIsNotEnoughForThisCar);
+
+            return new SuccessResult();
         }
 
         private IResult CheckIfThisCarHasBeenReturned(Rental rental)
