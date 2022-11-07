@@ -84,5 +84,11 @@ namespace Business.Constrants
         public static string PaymentUpdated="Ödeme güncellendi!";
         public static string PaymentDeleted="Ödeme silindi!";
         public static string PaymentSuccessful="Ödeme başarılı!";
+        public static string CustomerFindeksPointIsNotEnoughForThisCar="Müşterinin Findeks Puan'ı bu araba için yeterli değil, lütfen başka bir araç seçiniz.";
+        public static string FirstAndLastNameUpdated="İsim ve soyisim güncellendi.";
+        public static string EmailUpdated="Mail adresi güncellendi.";
+        public static string PasswordIsIncorrect="Şifre hatalı";
+        public static string PasswordUpdated="Şifre güncellendi";
+        public static string PasswordsDoNotMatch="Şifre uyuşmuyor";
     }
 }
