@@ -44,6 +44,15 @@ namespace WebAPI.Controllers
             var newSuccessDataResult = new SuccessDataResult<AccessToken>(createAccessTokenResult.Data, result.Message);
             return Ok(newSuccessDataResult);
         }
+
+        [HttpPost("updatepassword")]
+        public IActionResult UpdatePassword(UpdatePasswordDTO updatePasswordDTO)
+        {
+            var result = _authService.UpdatePassword(updatePasswordDTO);
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
+        }
     }
 }
 
