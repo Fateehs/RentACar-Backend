@@ -33,7 +33,7 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = from user in context.Users.Where(filter)
                              select new UserDTO { 
-                                 Id = user.UserId,
+                                 UserId = user.UserId,
                                  FirstName = user.FirstName,
                                  LastName = user.LastName,
                                  Email = user.Email };

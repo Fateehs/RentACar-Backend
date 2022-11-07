@@ -1,5 +1,6 @@
 ﻿using Core.Entities.Concrete;
 using Core.Utilities.Results;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,14 @@ namespace Business.Abstract
 {
     public interface IUserService
     {
+        IDataResult<UserDTO> GetDTOById(int userId);
+        IDataResult<User> GetByEmail(string email);
+        IDataResult<User> GetById(int userId);
+        IResult UpdateFirstAndLastName(UpdateFirstAndLastNameDTO updateFirstAndLastNameDTO);
+        IResult UpdateEmail(UpdateEmailDTO updateFirstAndLastNameDTO);
+
+        // * * * ONLY TEST PURPOSE * * * 
+
         IDataResult<List<User>> GetAll();
         IDataResult<User> GetUserById(int userId);
         IResult Add(User user);

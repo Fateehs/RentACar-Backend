@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,36 @@ namespace WebAPI.Controllers
         {
             _userService = userService;
         }
+
+        [HttpGet("getdtobyid")]
+        public IActionResult GetDTOById(int id)
+        {
+            var result = _userService.GetDTOById(id);
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpPost("updatefirstandlastname")]
+        public IActionResult UpdateFirstAndLastName(UpdateFirstAndLastNameDTO updateFirstAndLastNameDTO)
+        {
+            var result = _userService.UpdateFirstAndLastName(updateFirstAndLastNameDTO);
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpPost("updateemail")]
+        public IActionResult UpdateEmail(UpdateEmailDTO updateEmailDTO)
+        {
+            var result = _userService.UpdateEmail(updateEmailDTO);
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
+        }
+
+
+        // *** TEST CONTROLLERS ***
 
         [HttpGet("getall")]
         public IActionResult GetAll()
@@ -73,3 +104,4 @@ namespace WebAPI.Controllers
         }
     }
 }
+
