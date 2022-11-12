@@ -27,14 +27,12 @@ namespace Business.Concrete
         }
 
         [CacheAspect(10)]
-        //[SecuredOperation("user,moderator,admin")]
         public IDataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
 
         [CacheAspect(10)]
-        //[SecuredOperation("user,moderator,admin")]
         public IDataResult<List<CarDetailDTO>> GetDetailsByBrandId(int brandId)
         {
             var result = _carDal.GetDetails(c => c.BrandId == brandId);
@@ -42,7 +40,6 @@ namespace Business.Concrete
         }
 
         [CacheAspect(10)]
-        //[SecuredOperation("user,moderator,admin")]
         public IDataResult<List<CarDetailDTO>> GetDetailsByColorId(int colorId)
         {
             var result = _carDal.GetDetails(c => c.ColorId == colorId);
@@ -50,7 +47,6 @@ namespace Business.Concrete
         }
 
         [CacheAspect(10)]
-        //[SecuredOperation("user,moderator,admin")]
         public IDataResult<Car> GetById(int carId)
         {
             var result = _carDal.Get(c => c.CarId == carId);
@@ -58,7 +54,6 @@ namespace Business.Concrete
         }
 
         [CacheAspect(10)]
-        //[SecuredOperation("user,moderator,admin")]
         public IDataResult<CarDetailDTO> GetDetailById(int carId)
         {
             var result = _carDal.GetDetail(c => c.CarId == carId);
@@ -66,7 +61,7 @@ namespace Business.Concrete
         }
 
         [CacheRemoveAspect("ICarService.Get")]
-        //[SecuredOperation("admin")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
@@ -76,7 +71,7 @@ namespace Business.Concrete
         }
 
         [CacheRemoveAspect("ICarService.Get")]
-        //[SecuredOperation("admin")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Delete(Car car)
         {
@@ -86,7 +81,7 @@ namespace Business.Concrete
         }
 
         [CacheRemoveAspect("ICarService.Get")]
-        //[SecuredOperation("admin,moderator")]
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
@@ -94,9 +89,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarUpdated);
         }
 
-
         [CacheAspect(10)]
-        //[SecuredOperation("user,moderator,admin")]
         public IDataResult<List<CarDetailDTO>> GetDetails()
         {
             return new SuccessDataResult<List<CarDetailDTO>>(_carDal.GetDetails());

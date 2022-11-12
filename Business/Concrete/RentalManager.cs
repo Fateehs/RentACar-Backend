@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constrants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -59,7 +60,7 @@ namespace Business.Concrete
         }
 
         // *** GET METHODS ***
-
+        [CacheAspect(10)]
         public IDataResult<List<Rental>> GetAll()
         {
             var result = _rentalDal.GetAll();
@@ -67,6 +68,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(result, Messages.Listed);
         }
 
+        [CacheAspect(10)]
         public IDataResult<List<RentalDetailDTO>> GetDetails()
         {
             var result = _rentalDal.GetDetails();
@@ -74,6 +76,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<RentalDetailDTO>>(result, Messages.Listed);
         }
 
+        [CacheAspect(10)]
         public IDataResult<Rental> GetById(int rentalId)
         {
             var result = _rentalDal.Get(r => r.RentalId == rentalId);

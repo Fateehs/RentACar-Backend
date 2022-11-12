@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.AutoFac;
 using Business.Constrants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -22,6 +24,7 @@ namespace Business.Concrete
         {
             _paymentDal = paymentDal;
         }
+
 
         [ValidationAspect(typeof(FVPaymentValidator))]
         public IResult Pay(Payment payment)
@@ -56,6 +59,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.PaymentDeleted);
         }
 
+        [CacheAspect(10)]
         public IDataResult<List<Payment>> GetAll()
         {
             var result = _paymentDal.GetAll();
@@ -63,6 +67,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Payment>>(result, Messages.Listed);
         }
 
+        [CacheAspect(10)]
         public IDataResult<Payment> GetById(int paymentId)
         {
             var result = _paymentDal.Get(p => p.PaymentId == paymentId);
@@ -70,6 +75,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Payment>(result, Messages.Geted);
         }
 
+        [CacheAspect(10)]
         public IDataResult<List<Payment>> GetAllByCustomerId(int customerId)
         {
             var result = _paymentDal.GetAll(p => p.CustomerId == customerId);
