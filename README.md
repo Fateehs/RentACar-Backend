@@ -1,7 +1,7 @@
-#RentACar 
+## RentACar 
 For this project, I decided to use the name that suits its purpose.
 
-#Project Description
+## Project Description
 This is the backend of my project for renting a car. You can rent (think of it as simulated) a car through this web application.
 
 ## Technologies That Used
@@ -32,7 +32,7 @@ This is the backend of my project for renting a car. You can rent (think of it a
 | Mime-Detective | 22.7.16 |
 | Newtonsoft.Json | 10.0.1 |
 
-# Contributions
+## Contributions
 
 Thanks to [Engin Demiroğ](http://https://github.com/engindemirog) for his 
 contributions.
