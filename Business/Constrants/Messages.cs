@@ -90,5 +90,8 @@ namespace Business.Constrants
         public static string PasswordIsIncorrect="Şifre hatalı";
         public static string PasswordUpdated="Şifre güncellendi";
         public static string PasswordsDoNotMatch="Şifre uyuşmuyor";
+        public static string ImageLimitHasBeenExceeded= "Resim limit doldu";
+        public static string Updated = "Güncellendi";
+        public static string Deleted = "Silindi";
     }
 }
