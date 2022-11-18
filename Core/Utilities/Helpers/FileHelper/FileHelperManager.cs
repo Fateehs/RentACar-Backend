@@ -7,50 +7,61 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Utilities.Helpers.GuidHelperr;
+using Core.Exceptions;
 
 namespace Core.Utilities.Helpers.FileHelper
 {
     public class FileHelperManager : IFileHelperService
     {
-        string _path = Directory.GetCurrentDirectory() + "/wwwroot/";
-        string _imageFolderPath = "images/";
+        static string _basePath = Directory.GetCurrentDirectory() + "/wwwroot/";
+        static string _imageFolder = "images/";
+        string _fullPath = _basePath + _imageFolder;
+
+        public string Add(IFormFile file)
+        {
+            CreateDirectory(_fullPath);
+
+            var fileExtension = Path.GetExtension(file.FileName);
+            CheckImage(fileExtension);
+
+            var imagePath = _imageFolder + Guid.NewGuid().ToString() + fileExtension;
+
+            CreateFile(file, _basePath + imagePath);
+
+            return imagePath;
+        }
+
         public void Delete(string filePath)
         {
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
+            File.Delete(_basePath + filePath);
         }
 
-        public string Update(IFormFile file, string filePath, string root)
+        public string Update(IFormFile file, string oldFilePath)
         {
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-            return Upload(file, root);
+            Delete(oldFilePath);
+            return Add(file);
         }
 
-        public string Upload(IFormFile file, string root)
+        private void CheckImage(string extension)
         {
-            if (file.Length > 0)
-            {
-                if (!Directory.Exists(root))
-                {
-                    Directory.CreateDirectory(root);
-                }
-                string extension = Path.GetExtension(file.FileName);
-                string guid = GuidHelper.CreateGuid();
-                string filePath =  guid + extension;
+            var extensions = new List<string> { ".jpg", ".png", "jpeg" };
 
-                using (FileStream fileStream = File.Create(_path + _imageFolderPath + filePath))
-                {
-                    file.CopyTo(fileStream);
-                    fileStream.Flush();
-                    return _imageFolderPath + filePath;
-                }
+            if (!extensions.Contains(extension))
+                throw new FileHelperCustomException("Unsupported Media Type");
+        }
+
+        private void CreateDirectory(string path)
+        {
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+        }
+
+        private void CreateFile(IFormFile file, string path)
+        {
+            using (FileStream fileStream = File.Create(path))
+            {
+                file.CopyTo(fileStream);
+                fileStream.Flush();
             }
-            return null;
         }
     }
 }

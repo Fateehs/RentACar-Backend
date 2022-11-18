@@ -15,36 +15,34 @@ namespace WebAPI.Controllers
             _carImageService = carImageService;
         }
         [HttpPost("add")]
-        public IActionResult Add([FromForm(Name = "imagePath")] IFormFile file, [FromForm] CarImage carImage)
+        public IActionResult Add(IFormFile file, int carId)
         {
-            var result = _carImageService.Add(file, carImage);
+            var result = _carImageService.Add(file, carId);
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
+
         [HttpPost("delete")]
-        public IActionResult Delete(CarImage carImage)
+        public IActionResult Delete(int id)
         {
-            var carDeleteImage = _carImageService.GetByImageId(carImage.Id).Data;
-            var result = _carImageService.Delete(carDeleteImage);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            var result = _carImageService.Delete(id);
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
         }
+
         [HttpPost("update")]
-        public IActionResult Update([FromForm] IFormFile file, [FromForm] CarImage carImage)
+        public IActionResult Update(int id, [FromForm] IFormFile file)
         {
-            var result = _carImageService.Update(file, carImage);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            var result = _carImageService.Update(file, id);
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
         }
+
         [HttpGet("getall")]
         public IActionResult GetAll()
         {

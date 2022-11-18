@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constrants;
+using Core.Aspects.Autofac.Transaction;
 using Core.Utilities.Business;
 using Core.Utilities.Helpers.FileHelper;
 using Core.Utilities.Results;
@@ -28,34 +29,45 @@ namespace Business.Concrete
             _fileHelper = fileHelper;
         }
 
-        public IResult Add(IFormFile formFile, CarImage carImage)
+        public IResult Add(IFormFile file, int carId)
         {
-            IResult result = BusinessRules.Run(CheckCarImageLimit(carImage.CarId));
+            IResult result = BusinessRules.Run(CheckCarImageLimit(carId));
             if (!result.Success)
             {
                 return result;
             }
-            carImage.ImagePath = _fileHelper.Upload(formFile, _baseImagePath);
-            carImage.Date = DateTime.Now;
+
+            var carImage = new CarImage
+
+            {
+                CarId = carId,
+                Date = DateTime.Now,
+                ImagePath = _fileHelper.Add(file)
+            };
 
             _carImageDal.Add(carImage);
+
             return new SuccessResult(Messages.CarImageAdded);
         }
 
-        public IResult Update(IFormFile formFile, CarImage carImage)
+        [TransactionScopeAspect]
+        public IResult Update(IFormFile file,int id)
         {
-            var result = _carImageDal.Get(c => c.Id == carImage.Id);
-            carImage.ImagePath = _fileHelper.Update(formFile, _baseImagePath + result.ImagePath, _baseImagePath);
-            carImage.Date = DateTime.Now;
+            var carImage = _carImageDal.Get(ci => ci.Id == id);
+            carImage.ImagePath = _fileHelper.Update(file, carImage.ImagePath);
+
             _carImageDal.Update(carImage);
-            return new SuccessResult(Messages.CarImageUpdated);
+            return new SuccessResult(Messages.Updated);
         }
 
-        public IResult Delete(CarImage carImage)
+        [TransactionScopeAspect]
+        public IResult Delete(int id)
         {
-            _fileHelper.Delete(_baseImagePath + carImage.ImagePath);
+            var carImage = _carImageDal.Get(ci => ci.Id == id);
+            _fileHelper.Delete(carImage.ImagePath);
+
             _carImageDal.Delete(carImage);
-            return new SuccessResult(Messages.CarImageDeleted);
+            return new SuccessResult(Messages.Deleted);
         }
 
         public IDataResult<List<CarImage>> GetAll()
@@ -88,7 +100,7 @@ namespace Business.Concrete
             var result = _carImageDal.GetAll(c => c.CarId == carId).Count;
             if (result > 5)
             {
-                return new ErrorResult();
+                return new ErrorResult(Messages.ImageLimitHasBeenExceeded);
             }
             return new SuccessResult();
         }
