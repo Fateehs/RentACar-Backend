@@ -34,8 +34,8 @@ This is the backend of my project for renting a car. You can rent (think of it a
 
 ## Contributions
 
-Thanks to [Engin Demiroð](http://https://github.com/engindemirog) and 
-[Mustafa Aktoz](http://https://github.com/MustafaAktoz) for their contributions.
+Thanks to [Engin DemiroÄŸ](https://github.com/engindemirog) and 
+[Mustafa Aktoz](https://github.com/MustafaAktoz) for their contributions.
 
 ## Associated Project
 
