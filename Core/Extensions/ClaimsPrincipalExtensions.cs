@@ -15,7 +15,6 @@ namespace Core.Extensions
         public static List<string> ClaimRoles(this ClaimsPrincipal claimsPrincipal)
         {
             return claimsPrincipal?.Claims(ClaimTypes.Role);
-            // burayı tekrarla
         }
     }
 }
