@@ -103,5 +103,5 @@ CI/CD pipeline setup
 📬 [LinkedIn](https://linkedin.com/in/fatih-enes-selvi-0217681b2)  
 🌐 [Personal Website](https://fatihselvi.com)
 
-📄 License
+## 📄 License
 This project is open-source. License to be added.
